@@ -398,8 +398,8 @@
         <div class="options-grid">
             <div class="option-card" onclick="selectSingle('q1', 'premium', this)">
                 <div class="option-text">
-                    <h4>👑 頂級旗艦品牌</h4>
-                    <p>品質優先、極致靜音、獨家淨化與舒適科技</p>
+                    <h4>👑 頂級旗艦 / 韓系國際美學</h4>
+                    <p>品質優先、極致靜音、獨家淨化與智慧科技</p>
                 </div>
                 <div class="checkbox-circle"></div>
             </div>
@@ -430,7 +430,7 @@
             <div class="option-card" onclick="selectSingle('q2', 'high', this)">
                 <div class="option-text">
                     <h4>⚡ 長時間超高頻率使用</h4>
-                    <p>夏天每天開啟 8~12 小時以上，極度看重 CSPF 一級超越級省電與省電費</p>
+                    <p>夏天每天開啟 8~12 小時以上，極度看重雙迴轉變頻、CSPF 一級超越級省電</p>
                 </div>
                 <div class="checkbox-circle"></div>
             </div>
@@ -455,7 +455,7 @@
             <div class="option-card" onclick="selectSingle('q3', 'auto_wash', this)">
                 <div class="option-text">
                     <h4>🧼 懶人科技自體洗淨</h4>
-                    <p>希望有「凍結洗淨」、「自動防黴烘乾」或「離子主動抑菌」功能</p>
+                    <p>希望有「凍結洗淨」、「UVnano紫外線殺菌」或「離子主動抑菌」功能</p>
                 </div>
                 <div class="checkbox-circle"></div>
             </div>
@@ -484,6 +484,13 @@
     <div class="step" id="step4">
         <div class="question-title">4. 特殊生活場景需求（可多選）</div>
         <div class="options-grid">
+            <div class="option-card" onclick="toggleMulti('q4', 'smart', this)">
+                <div class="option-text">
+                    <h4>📱 App 遠端控溫 / 智慧家庭</h4>
+                    <p>出門在外預先開冷氣，或透過手機即時監測電力消耗</p>
+                </div>
+                <div class="checkbox-circle"></div>
+            </div>
             <div class="option-card" onclick="toggleMulti('q4', 'quiet', this)">
                 <div class="option-text">
                     <h4>🤫 極致安靜與氣流不直吹</h4>
@@ -613,10 +620,19 @@
             name: "國際牌 (Panasonic)",
             models: "UX / VX 系列 (CS-UX/CS-VX)",
             desc: "全台超省電王者，nanoe™ X 雙重主動淨化抑菌。",
-            features: ["nanoe™ X 48兆氫氧離子強效抑菌除臭", "超越國家1級 CSPF 頂級省電", "24小時主動防黴保養"],
-            tags: ["premium", "high", "auto_wash", "allergy"],
+            features: ["nanoe™ X 48兆氫氧離子強效抑菌除臭", "超越國家1級 CSPF 頂級省電", "內建 Wi-Fi 智慧控制與 24hr 主動防黴"],
+            tags: ["premium", "high", "auto_wash", "allergy", "smart"],
             clean: "nanoe™ X + 主動防黴",
             tech: "nanoe™ X + 頂級省電"
+        },
+        lg: {
+            name: "LG (DUALCOOL)",
+            models: "DUALCOOL 雙迴轉變頻系列 (WiFi旗艦/奢華)",
+            desc: "韓系智慧家電標桿，主打雙迴轉變頻、ThinQ™ 遠端控溫與 UV殺菌。",
+            features: ["DUAL Inverter 雙迴轉變頻壓縮機 (省電快速、10年保固)", "ThinQ™ Wi-Fi 智慧遠端控溫與即時耗電監測", "UVnano™ 紫外線風扇殺菌與奈米離子防黴"],
+            tags: ["premium", "high", "auto_wash", "smart"],
+            clean: "UVnano™ 殺菌 + 離子",
+            tech: "雙迴轉壓縮機 + ThinQ™ Wi-Fi"
         },
         mitsubishi_elec: {
             name: "三菱電機 (Mitsubishi Electric)",
@@ -692,7 +708,7 @@
         document.getElementById('progressFill').style.width = '100%';
 
         const scores = {
-            daikin: 0, hitachi: 0, panasonic: 0,
+            daikin: 0, hitachi: 0, panasonic: 0, lg: 0,
             mitsubishi_elec: 0, mitsubishi_heavy: 0,
             heran: 0, gree: 0
         };
@@ -702,13 +718,13 @@
             if (answers.q1 === 'premium' && b.tags.includes('premium')) scores[key] += 3;
             if (answers.q1 === 'value' && b.tags.includes('value')) scores[key] += 3;
 
-            if (answers.q2 === 'high' && key === 'panasonic') scores[key] += 2;
+            if (answers.q2 === 'high' && (key === 'panasonic' || key === 'lg')) scores[key] += 2;
 
-            if (answers.q3 === 'auto_wash' && (key === 'hitachi' || key === 'daikin' || key === 'panasonic')) scores[key] += 2;
+            if (answers.q3 === 'auto_wash' && (key === 'hitachi' || key === 'daikin' || key === 'panasonic' || key === 'lg')) scores[key] += 2;
             if (answers.q3 === 'easy_clean' && key === 'mitsubishi_elec') scores[key] += 4;
 
             answers.q4.forEach(tag => {
-                if (b.tags.includes(tag)) scores[key] += 2;
+                if (b.tags.includes(tag)) scores[key] += 3;
             });
         }
 
