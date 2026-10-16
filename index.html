@@ -2,7 +2,8 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 確保手機與平板能正確依照螢幕寬度縮放 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>空調品牌智慧選購指南 | Help Me Choose</title>
     <style>
         :root {
@@ -21,35 +22,42 @@
             margin: 0;
             padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            width: 100%;
+            max-width: 100vw;
+            overflow-x: hidden;
+            background-color: var(--bg-color);
+            color: var(--text-main);
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 20px;
+            padding: 16px 8px 56px 8px; /* 留出底部浮動欄空間 */
         }
 
         .container {
             width: 100%;
-            max-width: 800px;
+            max-width: 760px;
             background: var(--card-bg);
             border: 1px solid var(--card-border);
             border-radius: 16px;
-            padding: 32px;
+            padding: 28px 24px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.5);
         }
 
         .header {
             text-align: center;
-            margin-bottom: 28px;
+            margin-bottom: 24px;
         }
 
         .header h1 {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: 700;
             margin-bottom: 8px;
             letter-spacing: -0.5px;
@@ -57,14 +65,15 @@
 
         .header p {
             color: var(--text-muted);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
+            line-height: 1.4;
         }
 
         .progress-bar {
             height: 4px;
             background: var(--card-border);
             border-radius: 2px;
-            margin-bottom: 32px;
+            margin-bottom: 24px;
             overflow: hidden;
         }
 
@@ -81,37 +90,39 @@
 
         .step.active {
             display: block;
-            animation: fadeIn 0.4s ease;
+            animation: fadeIn 0.3s ease;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .question-title {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             font-weight: 600;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
+            line-height: 1.3;
         }
 
         .options-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 12px;
-            margin-bottom: 28px;
+            margin-bottom: 24px;
         }
 
         .option-card {
             background: rgba(255, 255, 255, 0.03);
             border: 2px solid var(--card-border);
             border-radius: 12px;
-            padding: 16px 20px;
+            padding: 14px 18px;
             cursor: pointer;
             transition: all 0.2s ease;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 12px;
         }
 
         .option-card:hover {
@@ -121,23 +132,31 @@
 
         .option-card.selected {
             border-color: var(--accent-color);
-            background: rgba(59, 130, 246, 0.1);
+            background: rgba(59, 130, 246, 0.12);
+        }
+
+        .option-text {
+            flex: 1;
+            min-width: 0;
+            word-wrap: break-word;
         }
 
         .option-text h4 {
-            font-size: 1rem;
+            font-size: 0.98rem;
             font-weight: 600;
             margin-bottom: 4px;
         }
 
         .option-text p {
-            font-size: 0.85rem;
+            font-size: 0.83rem;
             color: var(--text-muted);
+            line-height: 1.35;
         }
 
         .checkbox-circle {
-            width: 20px;
-            height: 20px;
+            flex-shrink: 0;
+            width: 22px;
+            height: 22px;
             border-radius: 50%;
             border: 2px solid var(--card-border);
             display: flex;
@@ -153,22 +172,25 @@
         .option-card.selected .checkbox-circle::after {
             content: '✓';
             color: white;
-            font-size: 12px;
+            font-size: 13px;
+            font-weight: bold;
         }
 
         .btn-group {
             display: flex;
             justify-content: space-between;
+            gap: 10px;
         }
 
         .btn {
-            padding: 12px 24px;
+            padding: 12px 20px;
             border-radius: 8px;
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             font-weight: 600;
             cursor: pointer;
             border: none;
             transition: all 0.2s;
+            touch-action: manipulation;
         }
 
         .btn-secondary {
@@ -191,18 +213,18 @@
             background: var(--accent-hover);
         }
 
-        /* 推薦結果頁面 */
+        /* 推薦結果卡片 */
         .result-card {
             border: 1px solid var(--card-border);
             border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 16px;
+            padding: 18px;
+            margin-bottom: 14px;
             background: rgba(255, 255, 255, 0.02);
         }
 
         .result-card.top1 {
             border-color: var(--success-color);
-            background: rgba(16, 185, 129, 0.05);
+            background: rgba(16, 185, 129, 0.06);
         }
 
         .badge {
@@ -218,28 +240,29 @@
         .badge-sub { background: var(--accent-color); color: #fff; }
 
         .brand-title {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: 700;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
         .model-tag {
             color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 12px;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
         }
 
         .feature-list {
             list-style: none;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             color: #d4d4d8;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
 
         .feature-list li {
             margin-bottom: 4px;
             padding-left: 16px;
             position: relative;
+            line-height: 1.35;
         }
 
         .feature-list li::before {
@@ -247,24 +270,113 @@
             color: var(--accent-color);
             position: absolute;
             left: 0;
+            font-weight: bold;
+        }
+
+        /* 響應式表格滑動區塊 */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-top: 16px;
+            border-radius: 8px;
+            border: 1px solid var(--card-border);
         }
 
         .comparison-table {
             width: 100%;
+            min-width: 520px;
             border-collapse: collapse;
-            margin-top: 20px;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
         }
 
         .comparison-table th, .comparison-table td {
             border: 1px solid var(--card-border);
-            padding: 10px;
+            padding: 10px 12px;
             text-align: left;
+            line-height: 1.35;
         }
 
         .comparison-table th {
             background: #222;
             color: var(--accent-color);
+            white-space: nowrap;
+        }
+
+        /* 最下方浮動版權標記 */
+        .footer-copyright {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            padding: 10px 12px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            background: rgba(13, 13, 13, 0.88);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            z-index: 1000;
+            letter-spacing: 0.3px;
+        }
+
+        /* 手機與平板專用媒體查詢 */
+        @media (max-width: 600px) {
+            body {
+                padding: 6px 4px 52px 4px;
+                align-items: flex-start;
+            }
+
+            .container {
+                padding: 18px 14px;
+                border-radius: 12px;
+            }
+
+            .header h1 {
+                font-size: 1.35rem;
+            }
+
+            .header p {
+                font-size: 0.82rem;
+            }
+
+            .question-title {
+                font-size: 1.05rem;
+                margin-bottom: 14px;
+            }
+
+            .option-card {
+                padding: 12px 14px;
+            }
+
+            .option-text h4 {
+                font-size: 0.92rem;
+            }
+
+            .option-text p {
+                font-size: 0.78rem;
+            }
+
+            .btn {
+                padding: 10px 16px;
+                font-size: 0.88rem;
+                flex: 1;
+                text-align: center;
+            }
+
+            .result-card {
+                padding: 14px;
+            }
+
+            .brand-title {
+                font-size: 1.15rem;
+            }
+
+            .footer-copyright {
+                font-size: 0.7rem;
+                padding: 8px 10px;
+            }
         }
     </style>
 </head>
@@ -287,14 +399,14 @@
             <div class="option-card" onclick="selectSingle('q1', 'premium', this)">
                 <div class="option-text">
                     <h4>👑 頂級旗艦品牌</h4>
-                    <p>品質優先、極致靜音、獨家淨化與舒適科技（大金、日立、國際牌、三菱電機）</p>
+                    <p>品質優先、極致靜音、獨家淨化與舒適科技</p>
                 </div>
                 <div class="checkbox-circle"></div>
             </div>
             <div class="option-card" onclick="selectSingle('q1', 'value', this)">
                 <div class="option-text">
                     <h4>⚖️ 高 CP 值與專業大風量</h4>
-                    <p>重風量速冷、耐用強效、價格親民性價比高（三菱重工、禾聯、格力）</p>
+                    <p>重風量速冷、耐用強效、價格親民性價比高</p>
                 </div>
                 <div class="checkbox-circle"></div>
             </div>
@@ -434,32 +546,39 @@
 
     <!-- Result Step -->
     <div class="step" id="resultStep">
-        <div class="question-title" style="text-align: center; margin-bottom: 24px;">🎯 專屬於您的空調品牌推薦結果</div>
+        <div class="question-title" style="text-align: center; margin-bottom: 20px;">🎯 專屬於您的空調品牌推薦結果</div>
         
         <div id="resultsContainer"></div>
 
-        <div style="text-align: center; margin-top: 24px;">
+        <div style="text-align: center; margin-top: 20px;">
             <button class="btn btn-secondary" onclick="toggleComparison()">📊 展開 / 隱藏完整詳細比較表</button>
         </div>
 
-        <div id="comparisonContainer" style="display: none; margin-top: 20px;">
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>品牌</th>
-                        <th>核心技術</th>
-                        <th>清淨與自潔</th>
-                        <th>適合場景</th>
-                    </tr>
-                </thead>
-                <tbody id="comparisonBody"></tbody>
-            </table>
+        <div id="comparisonContainer" style="display: none;">
+            <div class="table-responsive">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>品牌</th>
+                            <th>核心技術</th>
+                            <th>清淨與自潔</th>
+                            <th>特色總結</th>
+                        </tr>
+                    </thead>
+                    <tbody id="comparisonBody"></tbody>
+                </table>
+            </div>
         </div>
 
-        <div class="btn-group" style="margin-top: 32px;">
-            <button class="btn btn-secondary" onclick="restartQuiz()">🔄 重新選擇</button>
+        <div class="btn-group" style="margin-top: 28px;">
+            <button class="btn btn-secondary" onclick="restartQuiz()">🔄 重新測驗</button>
         </div>
     </div>
+</div>
+
+<!-- 最下方固定浮動版權標記 -->
+<div class="footer-copyright">
+    © 2026 GS AC Assessment. Maintained by Vic Chen
 </div>
 
 <script>
@@ -557,8 +676,9 @@
 
     function nextStep(stepNum) {
         document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-        document.getElementById(`step${stepNum}`).classList.add('active');
-        document.getElementById('progressFill').style.width = `${(stepNum / 5) * 100}%`;
+        document.getElementById('step' + stepNum).classList.add('active');
+        document.getElementById('progressFill').style.width = (stepNum / 5 * 100) + '%';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function prevStep(stepNum) {
@@ -577,7 +697,6 @@
             heran: 0, gree: 0
         };
 
-        // 評分邏輯
         for (let key in brandData) {
             const b = brandData[key];
             if (answers.q1 === 'premium' && b.tags.includes('premium')) scores[key] += 3;
@@ -593,7 +712,6 @@
             });
         }
 
-        // 排序取前 2~3 名
         const sorted = Object.keys(scores).sort((a,b) => scores[b] - scores[a]);
         const topBrands = sorted.slice(0, 3);
 
@@ -604,31 +722,36 @@
             const b = brandData[key];
             const isTop = idx === 0;
             const card = document.createElement('div');
-            card.className = `result-card ${isTop ? 'top1' : ''}`;
-            card.innerHTML = `
-                <span class="badge ${isTop ? 'badge-top' : 'badge-sub'}">${isTop ? '首選推薦 ⭐' : `優質推薦 #\${idx+1}`}</span>
-                <div class="brand-title">${b.name}</div>
-                <div class="model-tag">建議型號：${b.models}</div>
-                <p style="font-size:0.9rem; color:#a1a1aa; margin-bottom:10px;">${b.desc}</p>
-                <ul class="feature-list">
-                    ${b.features.map(f => `<li>\${f}</li>`).join('')}
-                </ul>
-            `;
+            card.className = 'result-card ' + (isTop ? 'top1' : '');
+            
+            const badgeText = isTop ? '首選推薦 ⭐' : ('優質推薦 #' + (idx + 1));
+            const badgeClass = isTop ? 'badge-top' : 'badge-sub';
+            
+            let listHtml = '';
+            b.features.forEach(function(f) {
+                listHtml += '<li>' + f + '</li>';
+            });
+
+            card.innerHTML = 
+                '<span class="badge ' + badgeClass + '">' + badgeText + '</span>' +
+                '<div class="brand-title">' + b.name + '</div>' +
+                '<div class="model-tag">建議型號：' + b.models + '</div>' +
+                '<p style="font-size:0.86rem; color:#a1a1aa; margin-bottom:10px; line-height:1.35;">' + b.desc + '</p>' +
+                '<ul class="feature-list">' + listHtml + '</ul>';
+                
             container.appendChild(card);
         });
 
-        // 填寫比較表
         const tbody = document.getElementById('comparisonBody');
         tbody.innerHTML = '';
         topBrands.forEach(key => {
             const b = brandData[key];
             const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td><strong>${b.name}</strong></td>
-                <td>${b.tech}</td>
-                <td>${b.clean}</td>
-                <td>${b.desc}</td>
-            `;
+            tr.innerHTML = 
+                '<td><strong>' + b.name + '</strong></td>' +
+                '<td>' + b.tech + '</td>' +
+                '<td>' + b.clean + '</td>' +
+                '<td>' + b.desc + '</td>';
             tbody.appendChild(tr);
         });
     }
