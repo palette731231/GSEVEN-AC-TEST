@@ -4,18 +4,19 @@
     <meta charset="UTF-8">
     <!-- 確保手機與平板能正確依照螢幕寬度縮放 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>集雅社空調品牌智慧選購指南 | Help Me Choose</title>
-    <!-- 載入純前端高畫質截圖元件 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <title>集雅社 空調品牌智慧選購 SO SMART !</title>
     <style>
         :root {
-            --bg-color: #0d0d0d;
-            --card-bg: #1a1a1a;
-            --card-border: #333333;
-            --accent-color: #3b82f6;
-            --accent-hover: #2563eb;
-            --text-main: #ffffff;
-            --text-muted: #a1a1aa;
+            --bg-gradient: linear-gradient(135deg, #0b1329 0%, #111c38 50%, #070d1a 100%);
+            --container-bg: rgba(15, 23, 42, 0.92);
+            --card-bg: #1e293b;
+            --card-border: #334155;
+            --accent-gold: #f59e0b;
+            --accent-gold-light: #fef08a;
+            --accent-hover: #d97706;
+            --accent-blue: #38bdf8;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
             --success-color: #10b981;
         }
 
@@ -31,7 +32,8 @@
             width: 100%;
             max-width: 100vw;
             overflow-x: hidden;
-            background-color: var(--bg-color);
+            background: var(--bg-gradient);
+            background-attachment: fixed;
             color: var(--text-main);
         }
 
@@ -40,17 +42,19 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 16px 8px 56px 8px; /* 留出底部浮動欄空間 */
+            padding: 20px 10px 60px 10px; /* 留出底部版權宣告空間 */
         }
 
         .container {
             width: 100%;
             max-width: 760px;
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 28px 24px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            background: var(--container-bg);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 20px;
+            padding: 32px 28px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
 
         .header {
@@ -59,31 +63,37 @@
         }
 
         .header h1 {
-            font-size: 1.6rem;
-            font-weight: 700;
+            font-size: 1.65rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fef08a 0%, #f59e0b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin-bottom: 8px;
             letter-spacing: -0.5px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
         }
 
         .header p {
             color: var(--text-muted);
-            font-size: 0.9rem;
-            line-height: 1.4;
+            font-size: 0.92rem;
+            line-height: 1.45;
+            font-weight: 400;
         }
 
         .progress-bar {
-            height: 4px;
-            background: var(--card-border);
-            border-radius: 2px;
-            margin-bottom: 24px;
+            height: 7px;
+            background: #1e293b;
+            border-radius: 4px;
+            margin-bottom: 26px;
             overflow: hidden;
+            border: 1px solid #334155;
         }
 
         .progress-fill {
             height: 100%;
-            background: var(--accent-color);
+            background: linear-gradient(90deg, #f59e0b, #fbbf24);
             width: 20%;
-            transition: width 0.3s ease;
+            transition: width 0.35s ease;
         }
 
         .step {
@@ -96,29 +106,30 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
+            from { opacity: 0; transform: translateY(6px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .question-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 18px;
-            line-height: 1.3;
+            font-size: 1.22rem;
+            font-weight: 700;
+            color: var(--accent-gold-light);
+            margin-bottom: 20px;
+            line-height: 1.35;
         }
 
         .options-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 12px;
-            margin-bottom: 24px;
+            margin-bottom: 28px;
         }
 
         .option-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 2px solid var(--card-border);
-            border-radius: 12px;
-            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1.5px solid #2a3a5e;
+            border-radius: 14px;
+            padding: 16px 20px;
             cursor: pointer;
             transition: all 0.2s ease;
             display: flex;
@@ -128,13 +139,14 @@
         }
 
         .option-card:hover {
-            border-color: #555;
-            background: rgba(255, 255, 255, 0.06);
+            border-color: var(--accent-gold);
+            background: rgba(245, 158, 11, 0.06);
         }
 
         .option-card.selected {
-            border-color: var(--accent-color);
-            background: rgba(59, 130, 246, 0.12);
+            border-color: var(--accent-gold);
+            background: rgba(245, 158, 11, 0.14);
+            box-shadow: 0 4px 16px rgba(245, 158, 11, 0.2);
         }
 
         .option-text {
@@ -144,15 +156,16 @@
         }
 
         .option-text h4 {
-            font-size: 0.98rem;
-            font-weight: 600;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-main);
             margin-bottom: 4px;
         }
 
         .option-text p {
-            font-size: 0.83rem;
+            font-size: 0.84rem;
             color: var(--text-muted);
-            line-height: 1.35;
+            line-height: 1.4;
         }
 
         .checkbox-circle {
@@ -160,20 +173,21 @@
             width: 22px;
             height: 22px;
             border-radius: 50%;
-            border: 2px solid var(--card-border);
+            border: 2px solid #475569;
             display: flex;
             align-items: center;
             justify-content: center;
+            background: rgba(0,0,0,0.2);
         }
 
         .option-card.selected .checkbox-circle {
-            border-color: var(--accent-color);
-            background: var(--accent-color);
+            border-color: var(--accent-gold);
+            background: var(--accent-gold);
         }
 
         .option-card.selected .checkbox-circle::after {
             content: '✓';
-            color: white;
+            color: #0f172a;
             font-size: 13px;
             font-weight: bold;
         }
@@ -181,152 +195,149 @@
         .btn-group {
             display: flex;
             justify-content: space-between;
-            gap: 10px;
+            gap: 12px;
             flex-wrap: wrap;
         }
 
         .btn {
-            padding: 12px 20px;
-            border-radius: 8px;
+            padding: 12px 22px;
+            border-radius: 10px;
             font-size: 0.92rem;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             border: none;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
             touch-action: manipulation;
         }
 
         .btn-secondary {
-            background: transparent;
+            background: rgba(255, 255, 255, 0.08);
             color: var(--text-muted);
-            border: 1px solid var(--card-border);
+            border: 1px solid #334155;
         }
 
         .btn-secondary:hover {
             color: var(--text-main);
-            border-color: #555;
+            background: rgba(255, 255, 255, 0.15);
         }
 
         .btn-primary {
-            background: var(--accent-color);
-            color: white;
+            background: linear-gradient(135deg, #d97706, #f59e0b);
+            color: #0f172a;
+            box-shadow: 0 4px 14px rgba(245, 158, 11, 0.3);
         }
 
         .btn-primary:hover {
-            background: var(--accent-hover);
-        }
-
-        .btn-share {
-            background: #10b981;
-            color: white;
-        }
-
-        .btn-share:hover {
-            background: #059669;
+            background: linear-gradient(135deg, #b45309, #d97706);
+            color: #ffffff;
         }
 
         /* 推薦結果卡片 */
         .result-card {
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 18px;
-            margin-bottom: 16px;
-            background: #1a1a1a;
+            border: 1px solid #334155;
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 18px;
+            background: rgba(30, 41, 59, 0.85);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
         }
 
         .result-card.top1 {
-            border-color: var(--success-color);
-            background: rgba(16, 185, 129, 0.08);
+            border: 2px solid var(--accent-gold);
+            background: rgba(245, 158, 11, 0.1);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.2);
         }
 
         .badge {
             display: inline-block;
-            padding: 4px 10px;
-            font-size: 0.75rem;
+            padding: 4px 12px;
+            font-size: 0.76rem;
             font-weight: 700;
             border-radius: 20px;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
-        .badge-top { background: var(--success-color); color: #000; }
-        .badge-sub { background: var(--accent-color); color: #fff; }
+        .badge-top { background: linear-gradient(135deg, #f59e0b, #fbbf24); color: #0f172a; }
+        .badge-sub { background: #0284c7; color: #ffffff; }
 
         .brand-title {
-            font-size: 1.3rem;
-            font-weight: 700;
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #ffffff;
             margin-bottom: 4px;
         }
 
         .model-tag {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            margin-bottom: 10px;
+            color: var(--accent-gold-light);
+            font-size: 0.88rem;
+            font-weight: 700;
+            margin-bottom: 12px;
         }
 
         .psych-box {
-            background: rgba(59, 130, 246, 0.12);
-            border-left: 3px solid var(--accent-color);
-            padding: 10px 12px;
-            margin-bottom: 12px;
-            font-size: 0.82rem;
-            color: #e4e4e7;
-            line-height: 1.45;
-            border-radius: 4px;
+            background: rgba(2, 132, 199, 0.15);
+            border-left: 4px solid var(--accent-blue);
+            padding: 12px 14px;
+            margin-bottom: 14px;
+            font-size: 0.84rem;
+            color: #e2e8f0;
+            line-height: 1.5;
+            border-radius: 6px;
         }
 
         .feature-list {
             list-style: none;
             font-size: 0.88rem;
-            color: #d4d4d8;
+            color: #cbd5e1;
             margin-bottom: 8px;
         }
 
         .feature-list li {
-            margin-bottom: 4px;
-            padding-left: 16px;
+            margin-bottom: 5px;
+            padding-left: 18px;
             position: relative;
-            line-height: 1.35;
+            line-height: 1.4;
         }
 
         .feature-list li::before {
-            content: "•";
-            color: var(--accent-color);
+            content: "✓";
+            color: var(--accent-gold);
             position: absolute;
             left: 0;
             font-weight: bold;
         }
 
-        /* 響應式表格滑動區塊 */
         .table-responsive {
             width: 100%;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
-            margin-top: 16px;
-            border-radius: 8px;
-            border: 1px solid var(--card-border);
+            margin-top: 18px;
+            border-radius: 10px;
+            border: 1px solid #334155;
+            background: #1e293b;
         }
 
         .comparison-table {
             width: 100%;
             min-width: 520px;
             border-collapse: collapse;
-            font-size: 0.82rem;
+            font-size: 0.83rem;
         }
 
         .comparison-table th, .comparison-table td {
-            border: 1px solid var(--card-border);
-            padding: 10px 12px;
+            border: 1px solid #334155;
+            padding: 12px 14px;
             text-align: left;
-            line-height: 1.35;
+            line-height: 1.4;
         }
 
         .comparison-table th {
-            background: #222;
-            color: var(--accent-color);
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--accent-gold-light);
+            font-weight: 700;
             white-space: nowrap;
         }
 
-        /* 最下方浮動版權標記 */
         .footer-copyright {
             position: fixed;
             bottom: 0;
@@ -336,64 +347,64 @@
             padding: 10px 12px;
             font-size: 0.75rem;
             color: var(--text-muted);
-            background: rgba(13, 13, 13, 0.88);
+            background: rgba(11, 19, 41, 0.92);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            border-top: 1px solid #1e293b;
             z-index: 1000;
             letter-spacing: 0.3px;
+            font-weight: 500;
         }
 
-        /* 手機與平板專用媒體查詢 */
         @media (max-width: 600px) {
             body {
-                padding: 6px 4px 52px 4px;
+                padding: 10px 6px 56px 6px;
                 align-items: flex-start;
             }
 
             .container {
-                padding: 18px 14px;
-                border-radius: 12px;
+                padding: 22px 16px;
+                border-radius: 16px;
             }
 
             .header h1 {
-                font-size: 1.35rem;
+                font-size: 1.38rem;
             }
 
             .header p {
-                font-size: 0.82rem;
+                font-size: 0.84rem;
             }
 
             .question-title {
-                font-size: 1.05rem;
-                margin-bottom: 14px;
+                font-size: 1.1rem;
+                margin-bottom: 16px;
             }
 
             .option-card {
-                padding: 12px 14px;
+                padding: 14px 16px;
             }
 
             .option-text h4 {
-                font-size: 0.92rem;
+                font-size: 0.94rem;
             }
 
             .option-text p {
-                font-size: 0.78rem;
+                font-size: 0.8rem;
             }
 
             .btn {
-                padding: 10px 14px;
-                font-size: 0.85rem;
+                padding: 10px 16px;
+                font-size: 0.86rem;
                 flex: 1;
                 text-align: center;
             }
 
             .result-card {
-                padding: 14px;
+                padding: 16px;
             }
 
             .brand-title {
-                font-size: 1.15rem;
+                font-size: 1.2rem;
             }
 
             .footer-copyright {
@@ -407,8 +418,8 @@
 
 <div class="container">
     <div class="header">
-        <h1>集雅社 空調品牌智慧選購 SO SMART !</h1>
-        <p>回答5個問題，推薦您最適合的空調品牌與型號，加碼回饋"心理性格畫像"</p>
+        <h1>集雅社 空調品牌選購 SO SMART !</h1>
+        <p>回答5個問題，推薦您最適合的空調品牌系列，加碼贈送"心理性格畫像"</p>
     </div>
 
     <div class="progress-bar">
@@ -417,26 +428,26 @@
 
     <!-- Step 1 -->
     <div class="step active" id="step1">
-        <div class="question-title">1. 您的預算與品牌定位偏好？</div>
+        <div class="question-title">1. 您的預算與定位偏好？</div>
         <div class="options-grid">
             <div class="option-card" onclick="selectSingle('q1', 'premium', this)">
                 <div class="option-text">
-                    <h4>👑 頂級旗艦 / 美學品牌</h4>
-                    <p>品質優先、極致靜音、獨家淨化與智慧科技</p>
+                    <h4>👑 頂級旗艦 / 質感美學風格</h4>
+                    <p>品質優先、極致靜音、獨家淨化科技與智慧聯網控制</p>
                 </div>
                 <div class="checkbox-circle"></div>
             </div>
             <div class="option-card" onclick="selectSingle('q1', 'value', this)">
                 <div class="option-text">
-                    <h4>⚖️ 高 CP 值與專業大風量</h4>
-                    <p>重風量速冷、耐用強效、價格親民性價比高</p>
+                    <h4>⚖️ 在地實用與高 CP 值大風量</h4>
+                    <p>重風量速冷、耐用強效、價格親民且性價比高</p>
                 </div>
                 <div class="checkbox-circle"></div>
             </div>
             <div class="option-card" onclick="selectSingle('q1', 'any', this)">
                 <div class="option-text">
-                    <h4>💡 彈性不限 / 無特別喜好</h4>
-                    <p>不限品牌定位，完全依照功能匹配度推薦</p>
+                    <h4>💡 彈性不限</h4>
+                    <p>不限品牌定位，完全依照功能與生活需求進行最佳匹配</p>
                 </div>
                 <div class="checkbox-circle"></div>
             </div>
@@ -453,7 +464,7 @@
             <div class="option-card" onclick="selectSingle('q2', 'high', this)">
                 <div class="option-text">
                     <h4>⚡ 長時間超高頻率使用</h4>
-                    <p>夏季每日開啟 8~12 小時以上，極度看重雙迴轉變頻、CSPF 一級超越級省電</p>
+                    <p>夏天每天開啟 8~12 小時以上，極度看重雙迴轉變頻與超越級省電</p>
                 </div>
                 <div class="checkbox-circle"></div>
             </div>
@@ -478,7 +489,7 @@
             <div class="option-card" onclick="selectSingle('q3', 'auto_wash', this)">
                 <div class="option-text">
                     <h4>🧼 懶人科技自體洗淨</h4>
-                    <p>希望有「凍結洗淨 3.0」、「UVnano紫外線殺菌」或「離子主動抑菌」功能</p>
+                    <p>希望具備熱洗冷凍、紫外線殺菌或離子主動抑菌乾燥等自潔科技</p>
                 </div>
                 <div class="checkbox-circle"></div>
             </div>
@@ -492,7 +503,7 @@
             <div class="option-card" onclick="selectSingle('q3', 'regular', this)">
                 <div class="option-text">
                     <h4>🧹 定期委外專業保養</h4>
-                    <p>無特殊自潔需求，習慣定期請專業師傅到府清洗</p>
+                    <p>無特殊自潔需求，習慣定期請專業師傅到府清洗保養</p>
                 </div>
                 <div class="checkbox-circle"></div>
             </div>
@@ -510,14 +521,14 @@
             <div class="option-card" onclick="toggleMulti('q4', 'smart', this)">
                 <div class="option-text">
                     <h4>📱 App 遠端控溫 / 智慧家庭</h4>
-                    <p>出門在外預先開冷氣，或透過手機即時監測電力消耗</p>
+                    <p>出門在外預先開啟冷氣，或透過手機即時監測電力消耗</p>
                 </div>
                 <div class="checkbox-circle"></div>
             </div>
             <div class="option-card" onclick="toggleMulti('q4', 'quiet', this)">
                 <div class="option-text">
                     <h4>🤫 極致安靜與氣流不直吹</h4>
-                    <p>淺眠怕噪、需要康達氣流或 19dB 極低運轉音</p>
+                    <p>淺眠怕噪、需要康達效應不直吹氣流或 19dB 極低運轉音</p>
                 </div>
                 <div class="checkbox-circle"></div>
             </div>
@@ -531,14 +542,14 @@
             <div class="option-card" onclick="toggleMulti('q4', 'corrosion', this)">
                 <div class="option-text">
                     <h4>🌊 沼氣 / 潮濕高腐蝕環境</h4>
-                    <p>靠近夜市、排水溝、溫泉區或潮濕山區，需要強化防沼氣設計</p>
+                    <p>靠近夜市、排水溝、溫泉區或潮濕山區，需要強化防沼氣耐腐蝕塗層</p>
                 </div>
                 <div class="checkbox-circle"></div>
             </div>
             <div class="option-card" onclick="toggleMulti('q4', 'long_throw', this)">
                 <div class="option-text">
                     <h4>🛋️ 大客廳 / 長型空間</h4>
-                    <p>需要強勁噴射氣流與超遠吹風距離快速冷房</p>
+                    <p>需要強勁噴射氣流與超遠吹風距離速冷</p>
                 </div>
                 <div class="checkbox-circle"></div>
             </div>
@@ -576,16 +587,15 @@
 
     <!-- Result Step -->
     <div class="step" id="resultStep">
-        <div class="question-title" style="text-align: center; margin-bottom: 12px;">🎯 專屬你的空調品牌與心理性格畫像</div>
+        <div class="question-title" style="text-align: center; margin-bottom: 12px;">🎯 專屬你的空調品牌與心理性格側寫</div>
         
-        <!-- 一鍵分享快捷工具列 -->
+        <!-- 一鍵複製分享結果按鈕 -->
         <div style="display: flex; gap: 8px; margin-bottom: 18px; justify-content: center; flex-wrap: wrap;">
-            <button class="btn btn-share" onclick="downloadResultImage()">📸 一鍵下載結果圖片</button>
-            <button class="btn btn-primary" onclick="copyResultText()">📋 複製分享文字</button>
+            <button class="btn btn-primary" onclick="copyResultText()">📋 一鍵複製分享結果</button>
         </div>
 
-        <!-- 截圖捕獲區塊 -->
-        <div id="resultsCaptureArea" style="padding: 4px; background: var(--card-bg); border-radius: 12px;">
+        <!-- 推薦內容展示區 -->
+        <div id="resultsCaptureArea" style="padding: 12px; background: #0b1329; border-radius: 14px;">
             <div id="resultsContainer"></div>
         </div>
 
@@ -599,7 +609,7 @@
                     <thead>
                         <tr>
                             <th>品牌</th>
-                            <th>核心技術</th>
+                            <th>現役核心技術</th>
                             <th>清淨與自潔</th>
                             <th>特色總結</th>
                         </tr>
@@ -610,12 +620,11 @@
         </div>
 
         <div class="btn-group" style="margin-top: 28px;">
-            <button class="btn btn-secondary" onclick="restartQuiz()">🔄 不準?再測一次?</button>
+            <button class="btn btn-secondary" onclick="restartQuiz()">🔄 重新測驗</button>
         </div>
     </div>
 </div>
 
-<!-- 最下方固定浮動版權標記 -->
 <div class="footer-copyright">
     © 2026 GS AC Assessment. Maintained by Vic Chen
 </div>
@@ -629,7 +638,7 @@
         q5: 'heat_cool'
     };
 
-    let latestTopBrandKey = '';
+    let latestTopBrandKeys = [];
 
     const brandData = {
         daikin: {
@@ -637,7 +646,7 @@
             models: "橫綱Y/Z系列",
             desc: "日系頂級舒適標桿，主打溫濕雙控與康達不直吹氣流。",
             psych: "【💡 心理性格畫像】選擇大金的你，性格溫和且注重生活的極致質感與感官細節。你厭惡突兀與失控，極度享受不被干擾的平穩生活節奏。在人際關係中，你常扮演潤滑劑的角色，注重氣氛的和諧與自然貼心的溫度。你相信一分錢一分貨，對生活品質從不妥協，追求低調奢華的寧靜美學。",
-            features: ["航太康達效應氣流（不直吹人）", "閃流放電空氣清淨與防黴運轉", "智慧溫濕雙控科技"],
+            features: ["航太康達效應氣流（不直吹）", "閃流放電空氣清淨與防黴運轉", "智慧溫濕雙控科技"],
             tags: ["premium", "high", "auto_wash", "quiet", "allergy"],
             clean: "閃流放電 + 防黴運轉",
             tech: "康達氣流 + 閃流放電"
@@ -654,7 +663,7 @@
         },
         panasonic: {
             name: "國際牌 (Panasonic)",
-            models: "UX / VX 系列",
+            models: "UX/VX系列",
             desc: "全台超省電王者，nanoe™ X 48兆雙重主動淨化抑菌。",
             psych: "【💡 心理性格畫像】選擇國際牌的你，是個兼具理性算計與感性關懷的生活達人。你非常會過日子，精打細算每一分成本，同時又無微不至地照顧家人的健康與舒適。你擁有強大的平衡感，能在實用性與高品質之間找到最佳黃金交叉點。對你來說，真正的幸福不是高調炫耀，而是日常生活裡細水長流的安心感。",
             features: ["nanoe™ X 48兆氫氧離子強效抑菌除臭", "超越國家 1 級 CSPF 頂級省電", "內建 Wi-Fi 智慧控制與 24hr 主動防黴"],
@@ -663,7 +672,7 @@
             tech: "nanoe™ X + 頂級 CSPF 省電"
         },
         lg: {
-            name: "LG (DUALCOOL)",
+            name: "台灣樂金 (LG)",
             models: "DUALCOOL AI雙迴轉變頻-極淨/極適2.0系列",
             desc: "韓系智慧家電標桿，主打雙迴轉變頻、ThinQ™ 遠端控溫與 UV殺菌。",
             psych: "【💡 心理性格畫像】選擇 LG 的你，思想開闊、熱愛創新，是典型的科技生活實踐者。你無法忍受繁瑣與低效，喜歡掌握主動權，享受隨時隨地用智慧掌控一切的快感。你對美感與質感有著獨到的敏銳度，注重視覺俐落與現代時尚感。在生活中，你總是敢於嘗試新事物，永遠走在時代與潮流的前端。",
@@ -675,25 +684,25 @@
         mitsubishi_elec: {
             name: "三菱電機 (Mitsubishi Electric)",
             models: "靜音大師 GA 系列",
-            desc: "靜音旗艦標桿，獨家 DBC 奈米複合塗層與 Easy Clean 易拆清風道。",
+            desc: "現役靜音旗艦標桿，獨家 DBC 奈米複合塗層與 Easy Clean 易拆清風道。",
             psych: "【💡 心理性格畫像】選擇三菱電機的你，性格獨立、專注且深沉內斂。你非常重視個人的精神空間，對噪音與混亂極度敏感，追求極致的安靜與純粹。你喜歡親自動手與掌握細節，享受掌控與維護生活的成就感。你不隨波逐流，只相信自己的體驗與專業眼光，是個擁有強大內心世界的人。",
-            features: ["Easy Clean 易拆清風道設計（清潔最方便）", "19dB 超靜音運轉與 DBC 奈米防污塗層", "MEQ 高規品質與 CSPF 1 級節能"],
+            features: ["全機 8 年原廠保固", "Easy Clean 易拆清風道設計（清潔最方便）", "19dB 超靜音運轉與 DBC 奈米防污塗層"],
             tags: ["premium", "normal", "easy_clean", "quiet"],
             clean: "Easy Clean 易拆清 + DBC塗層",
-            tech: "靜音大師 + 易拆清風道"
+            tech: "靜音大師 GA + 易拆清風道"
         },
         mitsubishi_heavy: {
             name: "三菱重工 (Mitsubishi Heavy)",
-            models: "未來ZSXT2 / 朝日ZTLT2 系列",
+            models: "未來 / 晴空 系列",
             desc: "重工級航太噴射氣流，強勁大風量與超遠風距速冷。",
-            psych: "【💡 心理性格畫像】選擇三菱重工的你，性格直爽、雷厲風行，討厭拖泥帶水與花拳卸腿。你重視實質結果與強大氣場，遇到問題總是希望能瞬間解決、快速見效。你擁有極強的抗壓能力與大局觀，不拘小節卻在核心關鍵上雷霆萬鈞。在團隊或家庭中，你往往是大家遇到風浪時最可靠的決策者。",
-            features: ["航空級噴射氣流技術（超遠吹風距離）", "強效速冷與 3D AUTO 立體風動", "過敏原抑制清淨濾網"],
+            psych: "【💡 心理性格畫像】選擇三菱重工的你，性格直爽、雷厲風行，討厭拖泥帶水與花拳膝腿。你重視實質結果與強大氣場，遇到問題總是希望能瞬間解決、快速見效。你擁有極強的抗壓能力與大局觀，不拘小節卻在核心關鍵上雷霆萬鈞。在團隊或家庭中，你往往是大家遇到風浪時最可靠的決策者。",
+            features: ["壓縮機 15 年原廠保固", "航空級噴射氣流技術（超遠吹風距離）", "強效速冷與 3D AUTO 立體風動"],
             tags: ["value", "normal", "long_throw"],
             clean: "過敏原抑制濾網",
             tech: "噴射氣流 + 3D AUTO"
         },
         heran: {
-            name: "禾聯 (HERAN)",
+            name: "禾聯 (Heran)",
             models: "耀金沼氣防護奢華型（AT / BT 系列）",
             desc: "台灣在地高性價比首選，強化防沼氣耐腐蝕設計。",
             psych: "【💡 心理性格畫像】選擇禾聯的你，眼光獨到、極具務實智慧，絕不盲目為品牌溢價買單。你清楚了解自己的真實需求，認為適合自己的才是最好的，追求最高境界的性價比。面對複雜或惡劣的環境，你展現出強大的適應力與求生智慧。你活得真實、有底氣，是用最小代價創造最大價值的實力派。",
@@ -702,15 +711,25 @@
             clean: "基礎防黴濾網",
             tech: "全機防沼氣 + 高 CP 值"
         },
-        gree: {
-            name: "格力 (Gree)",
-            models: "GKS 尊爵冷暖變頻系列",
-            desc: "全球空調產量龍頭，紮實穩定耐用與高 CP 值。",
-            psych: "【💡 心理性格畫像】選擇格力的你，務實敦厚、重視實用價值高於名氣與包裝。你討厭浮誇的花招，只在乎東西是否夠堅固、耐用與可靠。在處事哲學上，你一步一腳印，喜歡將資源花在最刀口的地方。你是一個低調實幹、值得深交，且總能給人踏實歸屬感的朋友。",
-            features: ["G10 變頻驅動核心技術", "穩定省電耐用", "價格優勢明顯"],
-            tags: ["value", "normal"],
-            clean: "機體自潔乾燥",
-            tech: "G10 變頻 + 穩定耐用"
+        maxe: {
+            name: "萬士益 (MAXE)",
+            models: "GH/KH 智能系列",
+            desc: "台灣在地深耕品牌，主打耐用高 CP 值與全機防沼氣防鏽。",
+            psych: "【💡 心理性格畫像】選擇萬士益的你，性格率真務實、講求實際效益。你特別討厭虛華不實的行銷話術，只看重扎實的耐用度與真正的划算感。在處事上你腳踏實地，擁有極佳的理財頭腦與生活眼光，總能用最聰明、最明智的方式，讓身邊的人享受到穩健舒心的生活品質。",
+            features: ["強化防沼氣與金屬防腐蝕塗層", "高 CP 值一級能效變頻冷暖", "全台完整後勤保養服務網"],
+            tags: ["value", "normal", "corrosion"],
+            clean: "機體防黴乾燥",
+            tech: "全機防沼氣 + 在地高 CP 值"
+        },
+        bingdian: {
+            name: "冰點 (BD)",
+            models: "G3/CSG2 旗艦系列",
+            desc: "正宗台灣製造 (MIT) 空調代表，主打扎實用料與大風量速冷。",
+            psych: "【💡 心理性格畫像】選擇冰點的你，內心懷抱著對在地品質的深厚信任與情懷。你個性擇善固執、注重實質細節與真材實料，不盲從國外大牌的明星光環。你喜歡默默做好每一件事，性格剛毅樸實，在朋友間是個低調、可靠且極具溫度的實力夥伴。",
+            features: ["台灣在地研發製造 (MIT 標章)", "大風量速冷與一級變頻省電", "堅固耐用與在地完善售後保固"],
+            tags: ["value", "normal", "long_throw"],
+            clean: "自體乾燥淨化",
+            tech: "正宗 MIT 台灣製造 + 大風量速冷"
         }
     };
 
@@ -752,7 +771,7 @@
         const scores = {
             daikin: 0, hitachi: 0, panasonic: 0, lg: 0,
             mitsubishi_elec: 0, mitsubishi_heavy: 0,
-            heran: 0, gree: 0
+            heran: 0, maxe: 0, bingdian: 0
         };
 
         for (let key in brandData) {
@@ -771,13 +790,12 @@
         }
 
         const sorted = Object.keys(scores).sort((a,b) => scores[b] - scores[a]);
-        const topBrands = sorted.slice(0, 3);
-        latestTopBrandKey = topBrands[0];
+        latestTopBrandKeys = sorted.slice(0, 3);
 
         const container = document.getElementById('resultsContainer');
         container.innerHTML = '';
 
-        topBrands.forEach((key, idx) => {
+        latestTopBrandKeys.forEach((key, idx) => {
             const b = brandData[key];
             const isTop = idx === 0;
             const card = document.createElement('div');
@@ -794,8 +812,8 @@
             card.innerHTML = 
                 '<span class="badge ' + badgeClass + '">' + badgeText + '</span>' +
                 '<div class="brand-title">' + b.name + '</div>' +
-                '<div class="model-tag">建議型號：' + b.models + '</div>' +
-                '<p style="font-size:0.86rem; color:#a1a1aa; margin-bottom:10px; line-height:1.35;">' + b.desc + '</p>' +
+                '<div class="model-tag">建議系列：' + b.models + '</div>' +
+                '<p style="font-size:0.86rem; color:#94a3b8; margin-bottom:10px; line-height:1.35; font-weight:400;">' + b.desc + '</p>' +
                 '<div class="psych-box">' + b.psych + '</div>' +
                 '<ul class="feature-list">' + listHtml + '</ul>';
                 
@@ -804,7 +822,7 @@
 
         const tbody = document.getElementById('comparisonBody');
         tbody.innerHTML = '';
-        topBrands.forEach(key => {
+        latestTopBrandKeys.forEach(key => {
             const b = brandData[key];
             const tr = document.createElement('tr');
             tr.innerHTML = 
@@ -816,47 +834,55 @@
         });
     }
 
-    /* 一鍵下載高畫質圖片 */
-    function downloadResultImage() {
-        const captureArea = document.getElementById('resultsCaptureArea');
-        if (typeof html2canvas !== 'undefined') {
-            html2canvas(captureArea, {
-                backgroundColor: '#0d0d0d',
-                scale: 2,
-                useCORS: true
-            }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = '我的專屬空調-心理性格畫像.png';
-                link.href = canvas.toDataURL('image/png');
-                link.click();
+    /* 一鍵複製分享結果 (只保留主推商品，移除 #2 與 #3) */
+    function copyResultText() {
+        if (!latestTopBrandKeys || !latestTopBrandKeys.length) {
+            alert('請先進行測驗以產生推薦結果！');
+            return;
+        }
+
+        const topB = brandData[latestTopBrandKeys[0]];
+
+        let text = "❄️【集雅社 空調品牌智慧選購測驗結果】\n\n" +
+                   "⭐ 首選推薦：" + topB.name + "\n" +
+                   "   建議系列：" + topB.models + "\n\n" +
+                   topB.psych + "\n\n" +
+                   "👉 歡迎來集雅社測測看最適合您的空調品牌！https://palette731231.github.io/GSEVEN-AC-TEST/";
+
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('✅ 已成功複製測驗結果文字！可以貼上分享給 LINE 或 FB 朋友囉！');
+            }).catch(() => {
+                fallbackCopyText(text);
             });
         } else {
-            alert('截圖功能元件載入中，請稍候重試或使用手機螢幕直接截圖！');
+            fallbackCopyText(text);
         }
     }
 
-    /* 一鍵複製文字結果 */
-    function copyResultText() {
-        if (!latestTopBrandKey || !brandData[latestTopBrandKey]) return;
-        const b = brandData[latestTopBrandKey];
-        const text = "❄️【我的專屬空調選購-心理性格畫像】\n" +
-                     "首選品牌：" + b.name + "\n" +
-                     "型號：" + b.models + "\n\n" +
-                     b.psych + "\n\n" +
-                     "👉 歡迎測測看最適合你的空調品牌！https://palette731231.github.io/GSEVEN-AC-TEST/";
+    function fallbackCopyText(text) {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.left = '-9999px';
+        textarea.style.top = '-9999px';
+        textarea.setAttribute('readonly', '');
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        
+        let successful = false;
+        try {
+            successful = document.execCommand('copy');
+        } catch (err) {
+            successful = false;
+        }
+        document.body.removeChild(textarea);
 
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(text).then(() => {
-                alert('✅ 已成功複製測驗結果文字！可以貼上分享給朋友囉！');
-            });
+        if (successful) {
+            alert('✅ 已成功複製測驗結果文字！可以貼上分享給 LINE 或 FB 朋友囉！');
         } else {
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
-            alert('✅ 已成功複製測驗結果文字！');
+            alert('複製失敗，請嘗試手動選取畫面的推薦文字進行複製。');
         }
     }
 
